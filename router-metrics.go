@@ -88,7 +88,9 @@ func sock(logline string) {
 	var fieldmap map[string]string
 	fieldmap = make(map[string]string)
 	for _, element := range words {
+             if strings.Contains(element, "=") {
 		fieldmap[strings.Split(element, "=")[0]] = strings.Split(element, "=")[1]
+             }
 	}
 	host := fieldmap["hostname"]
 	if !(strings.HasPrefix(host, "alamotest")) && len(words) > 9 && !strings.Contains(strings.Join(words, " "), "4813") {
