@@ -17,11 +17,9 @@ import (
 
 var conn net.Conn
 var err error
-var processed int
 var debugmode bool
 
 func main() {
-	processed = 0
 	envdebug := os.Getenv("DEBUG")
 	if envdebug == "" {
 		envdebug = "false"
@@ -117,7 +115,9 @@ func (consumer *Consumer) ConsumeClaim(session sarama.ConsumerGroupSession, clai
 	// The `ConsumeClaim` itself is called within a goroutine, see:
 	// https://github.com/Shopify/sarama/blob/master/consumer_group.go#L27-L29
 	for message := range claim.Messages() {
-		log.Printf("Message claimed: value = %s, timestamp = %v, topic = %s", string(message.Value), message.Timestamp, message.Topic)
+                if (debugmode){
+		    log.Printf("Message claimed: value = %s, timestamp = %v, topic = %s", string(message.Value), message.Timestamp, message.Topic)
+                }
                 sock(string(message.Value[:]))
 		session.MarkMessage(message, "")
 	}
