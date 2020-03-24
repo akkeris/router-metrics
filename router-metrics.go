@@ -250,6 +250,5 @@ func sock(logline string) {
 		}
 
 	}
-	processed++
 
 }
